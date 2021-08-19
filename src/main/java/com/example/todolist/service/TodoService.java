@@ -29,13 +29,14 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-//
-//    public Todo updateTodo(Integer id, Todo todo) {
-//        Todo todoId = getById(id);
-//        return todoRepository.save(updateToTrue(todoId,todo));
-//    }
-//
-//    private Todo updateToTrue(Todo todo, Todo TodoToBeUpdated){
-//
-//    }
+
+    public Todo updateTodo(Integer id, Todo todo) {
+        Todo todoUpdate = getById(id);
+        todoUpdate.setDone(todo.getDone());
+        return todoRepository.save(todoUpdate);
+    }
+
+    public void deleteTodo(Integer id){
+        todoRepository.delete(getById(id)); 
+    }
 }
