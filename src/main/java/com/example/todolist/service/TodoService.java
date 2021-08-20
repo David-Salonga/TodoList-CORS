@@ -32,11 +32,16 @@ public class TodoService {
 
     public Todo updateTodo(Integer id, Todo todo) {
         Todo todoUpdate = getById(id);
-        todoUpdate.setDone(todo.getDone());
+        if(todoUpdate.getText() != null){
+            todoUpdate.setText(todo.getText());
+        } else {
+            todoUpdate.setDone(todo.getDone());
+        }
         return todoRepository.save(todoUpdate);
     }
 
     public void deleteTodo(Integer id){
         todoRepository.delete(getById(id)); 
     }
+
 }
