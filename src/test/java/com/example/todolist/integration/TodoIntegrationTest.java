@@ -2,6 +2,7 @@ package com.example.todolist.integration;
 
 import com.example.todolist.model.Todo;
 import com.example.todolist.repository.TodoRepository;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ public class TodoIntegrationTest {
     @Test
     void should_update_todo_when_call_update_todo() throws Exception {
         //given
-        final Todo todo = new Todo("first to do item", false);
+        final Todo todo = new Todo("first new to do item", false);
         todoRepository.save(todo);
         Integer todoId = todo.getId();
 
@@ -94,6 +95,18 @@ public class TodoIntegrationTest {
                 .andExpect(jsonPath("$.done").value(true));
     }
 
-    
+    @Test
+    void should_delete_todo_when_call_delete_todo() throws Exception {
+        //given
+        final Todo firstTodo = new Todo("new first to do item", false);
+        final Todo secondTodo = new Todo("new second to do item", true);
+        todoRepository.saveAll(Lists.list(firstTodo, secondTodo));
+        Integer firstTodoId = firstTodo.getId();
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.delete("/todos/{firstTodoId}", firstTodoId))
+                .andExpect(status().isOk());
+    }
     
 }
