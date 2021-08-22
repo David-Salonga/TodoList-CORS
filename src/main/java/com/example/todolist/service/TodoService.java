@@ -26,13 +26,13 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
+        todo.setDone(false);
         return todoRepository.save(todo);
     }
 
-
     public Todo updateTodo(Integer id, Todo todo) {
         Todo todoUpdate = getById(id);
-        if(todoUpdate.getText() != null){
+        if(todo.getText() != null){
             todoUpdate.setText(todo.getText());
         } else {
             todoUpdate.setDone(todo.getDone());
